@@ -68,6 +68,22 @@ server.put("/hubs/:id", (req, res) => {
     .catch(err => {
       res.status(500).json({ success: false, err })
     });
+});
+
+server.get("/hubs/:id", (req, res) => {
+  const { id } = req.params;
+
+  db.findById(id)
+    .then(hub => {
+      if (hub) {
+        res.status(200).json({ success: true, hub })
+      } else {
+        res.status(404).json({ success: false, message: `id ${id} does not exist`})
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ success: false, err });
+    });
 })
 
 // console.log("hello world");
